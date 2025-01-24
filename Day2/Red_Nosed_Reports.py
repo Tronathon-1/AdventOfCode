@@ -26,10 +26,18 @@ def check_safe(res): # res is 2-D
 
     return tmp["Safe"]
 
+## good and check_again function provides result for both parts of problem
+def good(d, s=0):
+    for i in range(len(d)-1):
+        if not 1 <= d[i]-d[i+1] <= 3:
+            return s and any(good(d[j-1:j] + d[j+1:]) for j in (i,i+1))
+    return True
 
+def check_again(res):
 
+    for s in 0, 1:
+        print(sum(good(lst, s) or good(lst[::-1], s) for lst in res))
 
-    return
 
 def main():
     res = []
@@ -40,9 +48,9 @@ def main():
             res.append(lst)
 
     file.close()
-    # arr = [1, 2, 3, 3]
-    # print(check_inc_dec(arr))
-    print(check_safe(res))
+    check_again(res)
+
+    # print(check_safe(res))
 
 
 if __name__ == "__main__":
