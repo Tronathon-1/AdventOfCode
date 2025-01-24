@@ -1,24 +1,35 @@
-def check_safe(res):
-    flag = []
-    prev = 0
+def check_inc_dec(arr):
+    test = arr.copy()
+    # print("Original list" + str(test))
+    re_inc = all(i<j for i, j in zip(test, test[1:]))
+    re_dec = all(i>j for i, j in zip(test, test[1:]))
+    if re_dec == False and re_inc == False:
+        return False
+    else:
+        return True
+
+def check_difference(arr):
+    lst = arr.copy()
+    for i, j in zip(lst, lst[1:]):
+        if abs(i-j) > 3 or abs(i-j) < 1:
+            return False
+    return True
+
+
+def check_safe(res): # res is 2-D
+    tmp = {"Safe": 0, "Unsafe": 0}
     for lst in res:
-        if lst == sorted(lst) or lst == lst.sort(reverse=True):
-            continue
+        if check_inc_dec(lst) and check_difference(lst):
+            tmp["Safe"] += 1
         else:
-            flag.append(False)
-            continue
+            tmp["Unsafe"] += 1
 
-        prev = lst[0]
-        for i in range(1, len(lst)):
-            if abs(lst[i] - prev) > 3 or abs(lst[i] - prev) < 1:
-                flag.append(False)
-                continue
-            else:
-                prev = lst[i]
-                continue
+    return tmp["Safe"]
 
 
-    return len(res) - len(flag)
+
+
+    return
 
 def main():
     res = []
@@ -28,6 +39,9 @@ def main():
             lst = [int(i) for i in line.split()]
             res.append(lst)
 
+    file.close()
+    # arr = [1, 2, 3, 3]
+    # print(check_inc_dec(arr))
     print(check_safe(res))
 
 
