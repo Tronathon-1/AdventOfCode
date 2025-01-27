@@ -16,6 +16,24 @@ for i in range(0, len(nres)-1, 2):
 
 print(tot)
 
+# Part 2
+tot_sum = 0
+do_flag = True
+reg = r"do\(\)|don\'t\(\)|mul\((\d{1,3}),(\d{1,3})\)"
+with open("input.txt") as file:
+    for l in re.finditer(reg, file.read()):
+
+        if l[0] == 'do()':
+            do_flag = True
+        elif l[0] ==  'don\'t()':
+            do_flag = False
+        else:
+            if do_flag:
+                tot_sum += int(l[1]) * int(l[2])
+
+print(tot_sum)
+
+
 
 
 
